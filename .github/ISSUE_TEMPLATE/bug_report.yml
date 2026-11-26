@@ -1,0 +1,30 @@
+name: Bug report
+description: Report a crash or unexpected rendering, window or audio behavior.
+title: "[Bug] "
+body:
+  - type: textarea
+    id: environment
+    attributes:
+      label: Environment
+      description: Include QuietFrame, Minecraft, Fabric Loader, Fabric API and Java versions. Give the OS, desktop session, GPU, driver, renderer and relevant mods.
+    validations:
+      required: true
+  - type: textarea
+    id: reproduction
+    attributes:
+      label: Steps to reproduce
+      description: Include the relevant settings and the sequence of focus, hover, minimize, restore or input events.
+    validations:
+      required: true
+  - type: textarea
+    id: result
+    attributes:
+      label: Expected and observed behavior
+      description: Describe the difference you saw. For audio issues, include when volume changed and whether it recovered.
+    validations:
+      required: true
+  - type: textarea
+    id: logs
+    attributes:
+      label: Logs or measurements
+      description: Share relevant excerpts, screenshots or scored benchmark rows. Remove account identifiers, credentials and local paths.

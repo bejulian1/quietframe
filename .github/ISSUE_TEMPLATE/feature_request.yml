@@ -1,0 +1,23 @@
+name: Feature request
+description: Propose a QuietFrame improvement.
+title: "[Feature] "
+body:
+  - type: textarea
+    id: use_case
+    attributes:
+      label: Use case
+      description: Describe the window state or workflow you want QuietFrame to handle.
+    validations:
+      required: true
+  - type: textarea
+    id: behavior
+    attributes:
+      label: Desired behavior
+      description: Explain the expected result, including wake or restore behavior if it matters.
+    validations:
+      required: true
+  - type: textarea
+    id: alternatives
+    attributes:
+      label: Alternatives tried
+      description: List settings or workarounds that you tried and what happened.

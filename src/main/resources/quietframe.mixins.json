@@ -1,0 +1,16 @@
+{
+  "required": true,
+  "package": "no.julian.quietframe.mixin",
+  "plugin": "no.julian.quietframe.config.QuietFrameMixinPlugin",
+  "compatibilityLevel": "JAVA_25",
+  "client": [
+    "FramerateLimitTrackerAccessor",
+    "MinecraftMixin",
+    "ScreenshotMixin",
+    "SoundEngineMixin",
+    "WindowMixin"
+  ],
+  "injectors": {
+    "defaultRequire": 1
+  }
+}

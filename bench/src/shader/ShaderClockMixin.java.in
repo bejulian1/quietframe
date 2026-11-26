@@ -1,0 +1,17 @@
+package dev.quietframe.bench.mixin;
+
+import dev.quietframe.bench.Observer;
+import org.spongepowered.asm.mixin.Mixin;
+import org.spongepowered.asm.mixin.Pseudo;
+import org.spongepowered.asm.mixin.injection.At;
+import org.spongepowered.asm.mixin.injection.ModifyArg;
+
+@Pseudo
+@Mixin(targets = "@OWNER@", remap = false)
+abstract class ShaderClockMixin {
+    @ModifyArg(method = "uploadFrame()V", index = 1, at = @At(value = "INVOKE", ordinal = 0,
+            target = "L@INTERNAL@;put(Ljava/nio/ByteBuffer;FFFF)V"))
+    private static float bench$shaderTime(float value) {
+        return Observer.inFixture() ? 5.0f : value;
+    }
+}

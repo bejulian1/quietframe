@@ -1,0 +1,10 @@
+/build/
+/dist/
+/bench/build/
+/bench/.gradle/
+/bench/runs/
+*.class
+__pycache__/
+.DS_Store
+/docs/research-*.md
+/docs/review-*.md

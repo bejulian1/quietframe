@@ -1,0 +1,50 @@
+plugins { id 'net.fabricmc.fabric-loom' version '1.17.21' }
+
+group = 'dev.quietframe'
+version = '0.1.0'
+repositories { mavenCentral() }
+dependencies {
+    minecraft "com.mojang:minecraft:${minecraft_version}"
+    implementation "net.fabricmc:fabric-loader:${loader_version}"
+    compileOnly "net.fabricmc.fabric-api:fabric-api:${fabric_api_version}"
+}
+java { toolchain { languageVersion = JavaLanguageVersion.of(25) } }
+tasks.withType(JavaCompile).configureEach {
+    options.release = 25
+    options.compilerArgs += '-proc:none'
+}
+loom.runs.client {
+    runDir 'build/run'
+    programArgs '--graphicsBackend', 'VULKAN', '--username', 'QuietFrameBench',
+        '--uuid', '00000000-0000-3000-8000-000000000263'
+    vmArgs '-Xmx4G'
+    ['Out', 'Nonce', 'Profile'].each { name ->
+        if (providers.gradleProperty('bench' + name).isPresent()) {
+            property('quietframe.bench.' + name, providers.gradleProperty('bench' + name).get())
+        }
+    }
+}
+
+// The shader is optional and has no observer API. Resolve its class name from the staged distribution.
+def shaderJar = providers.gradleProperty('benchShaderJar')
+def shaderSource = layout.buildDirectory.dir('generated/shader')
+tasks.register('generateShaderHook') {
+    if (shaderJar.isPresent()) inputs.file(shaderJar.get())
+    inputs.file('src/shader/ShaderClockMixin.java.in')
+    outputs.dir(shaderSource)
+    doLast {
+        def owner = 'dev.quietframe.optional.AbsentShader'
+        if (shaderJar.isPresent()) {
+            new java.util.zip.ZipFile(file(shaderJar.get())).withCloseable { jar ->
+                def entry = jar.entries().find { it.name.endsWith('/render/LightshadeRenderer.class') }
+                if (!entry) throw new GradleException('Missing Lightshade renderer in supplied shader JAR')
+                owner = entry.name.replace('/', '.').replace('.class', '')
+            }
+        }
+        def output = shaderSource.get().file('dev/quietframe/bench/mixin/ShaderClockMixin.java').asFile
+        output.parentFile.mkdirs()
+        output.text = file('src/shader/ShaderClockMixin.java.in').text
+            .replace('@OWNER@', owner).replace('@INTERNAL@', owner.replace('.', '/'))
+    }
+}
+sourceSets.main.java.srcDir(tasks.named('generateShaderHook'))

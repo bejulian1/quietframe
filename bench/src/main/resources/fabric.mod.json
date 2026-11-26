@@ -1,0 +1,11 @@
+{
+  "schemaVersion": 1,
+  "id": "quietframe_bench",
+  "name": "QuietFrame Benchmark Observer",
+  "version": "0.1.0",
+  "license": "MIT",
+  "environment": "client",
+  "entrypoints": {"client": ["dev.quietframe.bench.Observer"]},
+  "mixins": ["quietframe-bench.mixins.json"],
+  "depends": {"minecraft": "=26.3", "fabricloader": "=0.19.5", "fabric-api": "=0.164.0+26.3", "java": ">=25"}
+}

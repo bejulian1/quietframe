@@ -1,0 +1,26 @@
+{
+  "schemaVersion": 1,
+  "id": "quietframe",
+  "version": "0.1.0",
+  "name": "QuietFrame",
+  "description": "Reduces background rendering and audio while keeping Minecraft responsive.",
+  "authors": ["Julian"],
+  "license": "MIT",
+  "icon": "assets/quietframe/icon.png",
+  "contact": {
+    "homepage": "https://github.com/bejulian1/quietframe",
+    "sources": "https://github.com/bejulian1/quietframe",
+    "issues": "https://github.com/bejulian1/quietframe/issues"
+  },
+  "environment": "client",
+  "entrypoints": {
+    "client": ["no.julian.quietframe.QuietFrameClient"]
+  },
+  "mixins": ["quietframe.mixins.json"],
+  "depends": {
+    "minecraft": "=26.3",
+    "fabricloader": ">=0.19.5",
+    "fabric-api": ">=0.164.0",
+    "java": ">=25"
+  }
+}
